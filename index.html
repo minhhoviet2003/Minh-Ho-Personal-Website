@@ -3,241 +3,316 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>minh ho — clean & ship.</title>
+<title>minh ho — data, systems &amp; clarity</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,500;1,9..144,600;1,9..144,700&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
+    --bg: #0F0E0D;
+    --bg-2: #161412;
     --paper: #F1E9D8;
-    --paper-2: #EDE3CE;
-    --ink: #161311;
-    --rust: #C2451F;
-    --olive: #6B7240;
-    --line: rgba(22,19,17,.16);
+    --paper-mute: rgba(241,233,216,.6);
+    --paper-faint: rgba(241,233,216,.08);
+    --paper-line: rgba(241,233,216,.12);
+    --amber: #FF7A2C;
+    --blue: #2D6FFF;
+    --violet: #8A4DFF;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{
-    background:var(--paper);color:var(--ink);
-    font-family:'Inter Tight',system-ui,sans-serif;font-weight:400;
-    -webkit-font-smoothing:antialiased;overflow-x:hidden;
-    font-feature-settings:"ss01","ss02";
-  }
-  body::before{
-    content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
-    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .42 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-    opacity:.16;mix-blend-mode:multiply;
+    background:#EDE5D2;
+    color:var(--paper);
+    font-family:'Inter Tight',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    padding:14px;
   }
   a{color:inherit;text-decoration:none}
   img{display:block;max-width:100%}
-  em,.it{font-family:'Fraunces',serif;font-style:italic;font-weight:500;letter-spacing:-.005em}
+  em,.it{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400}
 
-  /* ── status bar ── */
-  .top{
-    display:flex;justify-content:space-between;align-items:center;
-    padding:14px 28px;border-bottom:1px solid var(--line);
-    font-family:'JetBrains Mono',monospace;font-size:11px;
-    letter-spacing:.06em;text-transform:uppercase;
-    position:sticky;top:0;z-index:50;background:var(--paper);
+  /* ── outer card frame ── */
+  .frame{
+    background:var(--bg);
+    border-radius:28px;
+    overflow:hidden;
+    position:relative;
+    min-height:calc(100vh - 28px);
   }
-  .top .l,.top .r{display:flex;gap:22px;align-items:center}
-  .live{display:inline-flex;align-items:center;gap:7px}
-  .pulse{width:7px;height:7px;border-radius:50%;background:var(--olive);animation:p 1.6s infinite}
-  @keyframes p{0%,100%{opacity:1}50%{opacity:.3}}
+  .frame::before{
+    content:"";position:absolute;inset:0;pointer-events:none;z-index:1;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .07 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    opacity:.6;mix-blend-mode:screen;
+  }
 
-  /* ── nav ── */
+  /* ── status / nav inside frame ── */
+  .status{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:18px 28px;font-family:'JetBrains Mono',monospace;
+    font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--paper-mute);position:relative;z-index:5;
+    border-bottom:1px solid var(--paper-faint);
+  }
+  .status .l,.status .r{display:flex;gap:22px;align-items:center}
+  .live{display:inline-flex;align-items:center;gap:7px;color:var(--paper)}
+  .pulse{width:7px;height:7px;border-radius:50%;background:var(--amber);
+    box-shadow:0 0 8px var(--amber);animation:p 1.6s infinite}
+  @keyframes p{0%,100%{opacity:1}50%{opacity:.35}}
+
   nav{
     display:flex;justify-content:space-between;align-items:center;
-    padding:24px 28px;
+    padding:24px 28px;position:relative;z-index:5;
   }
   .brand{
-    font-family:'Fraunces',serif;font-weight:500;font-size:21px;
-    letter-spacing:-.015em;
+    font-family:'Bricolage Grotesque',sans-serif;
+    font-weight:700;font-size:20px;letter-spacing:-.02em;
   }
-  .brand .star{color:var(--rust);font-size:.9em;margin-right:4px}
-  .menu{display:flex;gap:28px;font-size:14px}
-  .menu a{position:relative;padding:4px 0}
-  .menu a::after{
-    content:"";position:absolute;left:0;bottom:0;height:1px;width:0;
-    background:var(--ink);transition:width .3s ease;
+  .brand .dot{color:var(--amber)}
+  .menu{display:flex;gap:6px;align-items:center}
+  .menu a{
+    padding:9px 14px;border-radius:999px;font-size:13px;
+    transition:all .25s ease;color:var(--paper-mute);
   }
-  .menu a:hover::after{width:100%}
+  .menu a:hover{background:var(--paper-faint);color:var(--paper)}
+  .menu .cta{
+    background:var(--paper);color:var(--bg);font-weight:500;
+  }
+  .menu .cta:hover{background:var(--amber);color:var(--bg)}
 
   /* ── hero ── */
-  .hero{padding:30px 28px 60px;position:relative}
+  .hero{
+    position:relative;padding:60px 28px 80px;
+    min-height:80vh;display:flex;flex-direction:column;justify-content:space-between;
+    z-index:2;
+  }
+  /* glowing orb */
+  .orb{
+    position:absolute;right:-120px;bottom:-160px;width:680px;height:680px;
+    pointer-events:none;z-index:1;
+    background:
+      radial-gradient(circle at 35% 65%, rgba(255,122,44,.95) 0%, rgba(255,122,44,0) 35%),
+      radial-gradient(circle at 75% 40%, rgba(45,111,255,.65) 0%, rgba(45,111,255,0) 45%),
+      radial-gradient(circle at 55% 50%, rgba(138,77,255,.35) 0%, rgba(138,77,255,0) 55%);
+    filter:blur(40px);
+    animation:orb 14s ease-in-out infinite;
+  }
+  @keyframes orb{
+    0%,100%{transform:translate(0,0) scale(1)}
+    50%{transform:translate(-40px,-30px) scale(1.08)}
+  }
+  /* secondary tiny orb */
+  .orb-sm{
+    position:absolute;left:6%;top:42%;width:180px;height:180px;
+    background:radial-gradient(circle, rgba(45,111,255,.4) 0%, rgba(45,111,255,0) 70%);
+    filter:blur(30px);z-index:1;pointer-events:none;
+  }
+
   .kicker{
     font-family:'JetBrains Mono',monospace;font-size:11px;
-    letter-spacing:.1em;text-transform:uppercase;
+    letter-spacing:.12em;text-transform:uppercase;color:var(--paper-mute);
     display:inline-flex;align-items:center;gap:10px;
-    margin-bottom:40px;
+    position:relative;z-index:3;
   }
-  .kicker::before{content:"";width:30px;height:1px;background:var(--ink)}
+  .kicker::before{content:"";width:32px;height:1px;background:var(--paper-mute)}
 
-  h1.hero-title{
-    font-family:'Fraunces',serif;
-    font-weight:500;
-    font-size:clamp(72px,16vw,260px);
-    line-height:.86;
-    letter-spacing:-.045em;
-    text-transform:lowercase;
+  h1.title{
+    font-family:'Bricolage Grotesque',sans-serif;
+    font-weight:800;
+    font-size:clamp(60px,11vw,168px);
+    line-height:.92;letter-spacing:-.04em;
+    margin-top:auto;margin-bottom:36px;
+    position:relative;z-index:3;
   }
-  h1.hero-title em{
-    font-weight:400;color:var(--rust);
-  }
-  h1.hero-title .amp{
-    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
-    color:var(--rust);font-size:1.05em;
+  h1.title em{
+    font-family:'Instrument Serif',serif;font-style:italic;
+    font-weight:400;letter-spacing:-.02em;
+    background:linear-gradient(135deg, var(--amber) 0%, var(--violet) 100%);
+    -webkit-background-clip:text;background-clip:text;
+    -webkit-text-fill-color:transparent;
   }
 
-  .hero-sub{
-    margin-top:46px;display:grid;grid-template-columns:1fr 1.2fr;gap:60px;
-    align-items:end;
+  .hero-bottom{
+    display:grid;grid-template-columns:1fr auto;gap:30px;align-items:end;
+    position:relative;z-index:3;
   }
-  @media (max-width:780px){.hero-sub{grid-template-columns:1fr}}
+  @media (max-width:780px){.hero-bottom{grid-template-columns:1fr}}
 
   .hero-bio{
-    font-size:20px;line-height:1.5;max-width:520px;
+    max-width:480px;font-size:17px;line-height:1.5;color:var(--paper-mute);
   }
-  .hero-bio strong{font-weight:600}
-  .hero-bio em{color:var(--rust)}
+  .hero-bio strong{color:var(--paper);font-weight:500}
+  .hero-bio em{color:var(--paper)}
 
-  .hero-side{
-    display:flex;flex-direction:column;gap:18px;align-items:flex-start;
+  /* glassy pills row */
+  .pills{
+    display:flex;flex-wrap:wrap;gap:8px;margin-top:22px;
   }
-  .hero-stats{
-    display:grid;grid-template-columns:repeat(3,1fr);gap:0;
-    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
-    width:100%;
+  .pill{
+    padding:10px 16px;border-radius:999px;
+    background:rgba(241,233,216,.04);
+    border:1px solid rgba(241,233,216,.12);
+    backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    font-size:13px;color:var(--paper);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.08);
+    transition:all .25s ease;
   }
-  .hs{
-    padding:18px 16px;border-right:1px solid var(--line);
+  .pill:hover{
+    background:rgba(255,122,44,.15);
+    border-color:rgba(255,122,44,.4);
+    transform:translateY(-2px);
   }
-  .hs:last-child{border-right:none}
-  .hs-num{
-    font-family:'Fraunces',serif;font-weight:500;
-    font-size:42px;line-height:1;letter-spacing:-.03em;
-  }
-  .hs-num em{color:var(--rust);font-weight:400}
-  .hs-lab{
+
+  .hero-photo{
+    width:160px;height:160px;border-radius:24px;
+    border:1px solid var(--paper-line);
+    background:rgba(241,233,216,.02);
+    backdrop-filter:blur(8px);
+    display:flex;align-items:center;justify-content:center;
     font-family:'JetBrains Mono',monospace;font-size:10px;
-    letter-spacing:.08em;text-transform:uppercase;margin-top:8px;opacity:.7;
+    color:var(--paper-mute);letter-spacing:.1em;text-transform:uppercase;
+    text-align:center;padding:20px;
   }
-
-  .cta-row{display:flex;gap:10px;flex-wrap:wrap}
-  .lk{
-    display:inline-flex;align-items:center;gap:8px;
-    padding:11px 18px;border:1px solid var(--ink);border-radius:999px;
-    font-size:13px;transition:all .2s ease;
-  }
-  .lk:hover{background:var(--ink);color:var(--paper)}
-  .lk.fill{background:var(--ink);color:var(--paper)}
-  .lk.fill:hover{background:var(--rust);border-color:var(--rust)}
 
   /* ── marquee ── */
   .mq{
-    background:var(--ink);color:var(--paper);
-    padding:18px 0;overflow:hidden;margin:40px 0;
+    background:var(--bg-2);padding:20px 0;overflow:hidden;
+    border-block:1px solid var(--paper-faint);position:relative;z-index:2;
   }
   .mq-track{
-    display:flex;gap:48px;white-space:nowrap;
-    animation:scroll 36s linear infinite;
-    font-family:'Fraunces',serif;font-weight:400;
-    font-size:38px;letter-spacing:-.02em;text-transform:lowercase;
+    display:flex;gap:50px;white-space:nowrap;
+    animation:scroll 38s linear infinite;
+    font-family:'Bricolage Grotesque',sans-serif;font-weight:700;
+    font-size:36px;letter-spacing:-.025em;
   }
-  .mq-track i{font-style:italic;color:var(--rust);font-weight:400}
-  .mq-track span{display:inline-flex;align-items:center;gap:48px}
-  .mq-track span::after{content:"✦";color:var(--paper);font-size:.7em;opacity:.6}
+  .mq-track i{font-style:italic;font-family:'Instrument Serif',serif;font-weight:400;color:var(--amber)}
+  .mq-track span{display:inline-flex;align-items:center;gap:50px}
+  .mq-track span::after{content:"✦";color:var(--paper-mute);font-size:.6em}
   @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-  /* ── section ── */
-  section{padding:80px 28px;position:relative}
+  /* ── sections ── */
+  section{padding:90px 28px;position:relative;z-index:2}
   .s-head{
     display:flex;justify-content:space-between;align-items:flex-end;
-    border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:50px;
+    border-bottom:1px solid var(--paper-faint);
+    padding-bottom:20px;margin-bottom:48px;
     flex-wrap:wrap;gap:18px;
   }
   .s-num{
     font-family:'JetBrains Mono',monospace;font-size:11px;
-    letter-spacing:.1em;text-transform:uppercase;opacity:.55;
-    margin-bottom:14px;
+    letter-spacing:.1em;text-transform:uppercase;
+    color:var(--paper-mute);margin-bottom:14px;
   }
   .s-title{
-    font-family:'Fraunces',serif;font-weight:500;
-    font-size:clamp(48px,8.5vw,110px);line-height:.88;
-    letter-spacing:-.035em;text-transform:lowercase;
+    font-family:'Bricolage Grotesque',sans-serif;font-weight:700;
+    font-size:clamp(44px,7.5vw,96px);line-height:.92;letter-spacing:-.035em;
   }
-  .s-title em{color:var(--rust);font-weight:400}
-  .s-aside{
-    font-size:14px;max-width:280px;text-align:right;opacity:.7;
+  .s-title em{
+    font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;
+    background:linear-gradient(135deg, var(--amber) 0%, var(--violet) 100%);
+    -webkit-background-clip:text;background-clip:text;
+    -webkit-text-fill-color:transparent;
   }
+  .s-aside{font-size:14px;max-width:280px;text-align:right;color:var(--paper-mute)}
 
   /* ── about ── */
-  .about-body{
-    max-width:780px;font-size:24px;line-height:1.45;
-  }
+  .about-body{max-width:780px;font-size:22px;line-height:1.5;color:var(--paper-mute)}
   .about-body p+p{margin-top:22px}
-  .about-body strong{font-weight:600}
-  .about-body em{color:var(--rust)}
-  .about-body .hl{
-    background:var(--rust);color:var(--paper);padding:0 7px;
-    border-radius:3px;font-style:normal;
+  .about-body strong{color:var(--paper);font-weight:500}
+  .about-body em{color:var(--paper)}
+
+  .stat-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+    margin-top:50px;border-top:1px solid var(--paper-faint);
+    border-bottom:1px solid var(--paper-faint);
+  }
+  @media (max-width:780px){.stat-grid{grid-template-columns:repeat(2,1fr)}}
+  .stat{
+    padding:24px 18px;border-right:1px solid var(--paper-faint);
+  }
+  .stat:last-child{border-right:none}
+  @media (max-width:780px){
+    .stat:nth-child(2){border-right:none}
+    .stat:nth-child(1),.stat:nth-child(2){border-bottom:1px solid var(--paper-faint)}
+  }
+  .stat-num{
+    font-family:'Bricolage Grotesque',sans-serif;font-weight:700;
+    font-size:46px;line-height:1;letter-spacing:-.03em;
+  }
+  .stat-num em{
+    font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;
+    color:var(--amber);
+  }
+  .stat-lab{
+    font-family:'JetBrains Mono',monospace;font-size:10px;
+    letter-spacing:.08em;text-transform:uppercase;
+    color:var(--paper-mute);margin-top:10px;
   }
 
   /* ── principles ── */
   .princ{
     display:grid;grid-template-columns:repeat(2,1fr);gap:0;
-    margin-top:50px;border-top:1px solid var(--line);
+    border-top:1px solid var(--paper-faint);
   }
   @media (max-width:780px){.princ{grid-template-columns:1fr}}
   .princ-item{
-    padding:36px 28px;border-bottom:1px solid var(--line);
-    border-right:1px solid var(--line);position:relative;
-    transition:background .25s ease;
+    padding:34px 26px;border-bottom:1px solid var(--paper-faint);
+    border-right:1px solid var(--paper-faint);position:relative;
+    transition:background .3s ease;
   }
   .princ-item:nth-child(2n){border-right:none}
-  .princ-item:hover{background:var(--paper-2)}
+  @media (max-width:780px){.princ-item{border-right:none}}
+  .princ-item:hover{background:rgba(255,122,44,.04)}
   .princ-rom{
-    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
-    color:var(--rust);font-size:18px;margin-bottom:16px;
+    font-family:'Instrument Serif',serif;font-style:italic;
+    color:var(--amber);font-size:18px;margin-bottom:14px;
   }
   .princ-text{
-    font-family:'Fraunces',serif;font-weight:500;
-    font-size:26px;line-height:1.2;letter-spacing:-.015em;
+    font-family:'Bricolage Grotesque',sans-serif;font-weight:500;
+    font-size:24px;line-height:1.25;letter-spacing:-.015em;
   }
-  .princ-text em{font-weight:400;color:var(--rust)}
+  .princ-text em{font-weight:400;color:var(--amber)}
 
-  /* ── work ── */
+  /* ── work list ── */
   .work-list{display:flex;flex-direction:column}
   .work-row{
     display:grid;grid-template-columns:130px 1fr 110px;
-    gap:30px;padding:32px 0;border-bottom:1px solid var(--line);
+    gap:30px;padding:32px 0;border-bottom:1px solid var(--paper-faint);
     align-items:start;cursor:pointer;
     transition:padding-left .3s ease;
   }
-  .work-row:hover{padding-left:14px;background:linear-gradient(90deg,var(--paper-2) 0%, transparent 100%)}
-  .work-row:hover .work-name{color:var(--rust)}
+  .work-row:hover{padding-left:14px}
+  .work-row:hover .work-name em{
+    background:linear-gradient(135deg, var(--amber) 0%, var(--violet) 100%);
+    -webkit-background-clip:text;background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
   .work-yr{
     font-family:'JetBrains Mono',monospace;font-size:12px;
-    letter-spacing:.05em;opacity:.6;padding-top:6px;
+    color:var(--paper-mute);padding-top:6px;
   }
   .work-name{
-    font-family:'Fraunces',serif;font-weight:500;
-    font-size:clamp(28px,4vw,48px);line-height:1;letter-spacing:-.025em;
-    text-transform:lowercase;transition:color .2s ease;
+    font-family:'Bricolage Grotesque',sans-serif;font-weight:700;
+    font-size:clamp(28px,4vw,46px);line-height:1;letter-spacing:-.025em;
   }
-  .work-name em{color:var(--rust);font-weight:400}
-  .work-role{
-    font-size:14px;margin-top:8px;opacity:.7;
+  .work-name em{
+    font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;
+    color:var(--amber);
   }
+  .work-role{font-size:13px;margin-top:8px;color:var(--paper-mute)}
   .work-desc{
-    margin-top:16px;font-size:16px;line-height:1.5;max-width:680px;
+    margin-top:16px;font-size:15px;line-height:1.55;
+    color:var(--paper-mute);max-width:680px;
   }
-  .work-desc em{color:var(--rust)}
+  .work-desc em{color:var(--paper);font-style:normal;
+    background:linear-gradient(135deg, var(--amber) 0%, var(--violet) 100%);
+    -webkit-background-clip:text;background-clip:text;
+    -webkit-text-fill-color:transparent;font-weight:500}
   .work-tag{
     text-align:right;font-family:'JetBrains Mono',monospace;
-    font-size:11px;letter-spacing:.06em;text-transform:uppercase;
-    opacity:.6;padding-top:10px;
+    font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--paper-mute);padding-top:10px;
   }
   @media (max-width:780px){
     .work-row{grid-template-columns:1fr;gap:6px}
@@ -245,484 +320,535 @@
   }
 
   /* ── projects ── */
-  .proj-grid{
-    display:grid;grid-template-columns:repeat(6,1fr);gap:14px;
-  }
+  .proj-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
   .proj{
-    background:var(--paper-2);border:1px solid var(--ink);
-    padding:28px;border-radius:6px;position:relative;
-    transition:transform .3s ease, background .3s ease;
-    grid-column:span 3;
+    grid-column:span 3;background:var(--bg-2);
+    border:1px solid var(--paper-faint);padding:28px;border-radius:18px;
+    position:relative;transition:transform .3s ease, border-color .3s ease;
+    overflow:hidden;
   }
-  .proj:hover{transform:translateY(-4px);background:var(--paper)}
+  .proj:hover{transform:translateY(-4px);border-color:rgba(255,122,44,.4)}
   .proj.span4{grid-column:span 4}
   .proj.span2{grid-column:span 2}
-  .proj.dark{background:var(--ink);color:var(--paper);border-color:var(--ink)}
-  .proj.rust{background:var(--rust);color:var(--paper);border-color:var(--rust)}
-  .proj.rust em,.proj.dark em{color:var(--paper);text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:3px}
+  .proj.glow{
+    background:
+      radial-gradient(circle at 100% 100%, rgba(255,122,44,.18) 0%, transparent 50%),
+      var(--bg-2);
+  }
+  .proj.glow-blue{
+    background:
+      radial-gradient(circle at 0% 100%, rgba(45,111,255,.18) 0%, transparent 50%),
+      var(--bg-2);
+  }
   @media (max-width:880px){.proj,.proj.span4,.proj.span2{grid-column:span 6}}
 
   .proj-num{
     font-family:'JetBrains Mono',monospace;font-size:11px;
-    letter-spacing:.08em;text-transform:uppercase;opacity:.6;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--paper-mute);
   }
   .proj-name{
-    font-family:'Fraunces',serif;font-weight:500;
-    font-size:clamp(28px,2.6vw,38px);
-    line-height:.95;letter-spacing:-.02em;text-transform:lowercase;
-    margin-top:18px;
+    font-family:'Bricolage Grotesque',sans-serif;font-weight:700;
+    font-size:clamp(26px,2.4vw,34px);
+    line-height:1;letter-spacing:-.025em;margin-top:18px;
   }
-  .proj-name em{color:var(--rust);font-weight:400}
-  .proj.rust .proj-name em,.proj.dark .proj-name em{color:var(--paper)}
-  .proj-body{margin-top:16px;font-size:15px;line-height:1.5;opacity:.9}
+  .proj-name em{
+    font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;
+    color:var(--amber);
+  }
+  .proj-body{
+    margin-top:14px;font-size:15px;line-height:1.55;color:var(--paper-mute);
+  }
+  .proj-body em{color:var(--amber);font-style:normal}
   .proj-tags{
-    margin-top:22px;display:flex;gap:10px;flex-wrap:wrap;
+    margin-top:20px;display:flex;gap:8px;flex-wrap:wrap;
     font-family:'JetBrains Mono',monospace;font-size:10px;
     letter-spacing:.08em;text-transform:uppercase;
   }
-  .proj-tags span{padding:4px 9px;border:1px solid currentColor;border-radius:999px;opacity:.85}
-  .proj-stat{
-    font-family:'Fraunces',serif;font-weight:500;
-    font-size:80px;line-height:.9;letter-spacing:-.04em;margin-top:12px;
+  .proj-tags span{
+    padding:5px 10px;border:1px solid var(--paper-faint);
+    border-radius:999px;color:var(--paper-mute);
   }
-  .proj-stat em{color:var(--rust);font-weight:400}
-  .proj.rust .proj-stat em{color:var(--paper)}
+  .proj-stat{
+    font-family:'Bricolage Grotesque',sans-serif;font-weight:700;
+    font-size:72px;line-height:.9;letter-spacing:-.04em;margin-top:16px;
+  }
+  .proj-stat em{
+    font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;
+    color:var(--amber);
+  }
 
-  /* ── trophy ── */
+  /* ── trophies ── */
   .troph{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
   @media (max-width:880px){.troph{grid-template-columns:1fr}}
   .tcard{
-    border:1px solid var(--ink);padding:28px;border-radius:6px;
-    background:var(--paper-2);transition:transform .3s ease;
-    display:flex;flex-direction:column;
+    border:1px solid var(--paper-faint);padding:26px;border-radius:18px;
+    background:var(--bg-2);transition:transform .3s ease,border-color .3s ease;
   }
-  .tcard:hover{transform:translateY(-3px) rotate(-.4deg)}
+  .tcard:hover{transform:translateY(-3px);border-color:rgba(255,122,44,.4)}
   .tcard.feat{
-    grid-column:span 3;background:var(--ink);color:var(--paper);
-    border-color:var(--ink);
+    grid-column:span 3;
+    background:
+      radial-gradient(circle at 80% 50%, rgba(255,122,44,.18) 0%, transparent 50%),
+      radial-gradient(circle at 20% 50%, rgba(45,111,255,.12) 0%, transparent 50%),
+      var(--bg-2);
+    border-color:rgba(255,122,44,.3);
   }
   @media (max-width:880px){.tcard.feat{grid-column:span 1}}
-  .tcard.feat em{color:var(--rust)}
   .tlab{
-    font-family:'JetBrains Mono',monospace;font-size:11px;
-    letter-spacing:.1em;text-transform:uppercase;opacity:.65;
-    display:inline-flex;align-items:center;gap:8px;
+    font-family:'JetBrains Mono',monospace;font-size:10px;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--paper-mute);
   }
-  .tlab .star{color:var(--rust)}
+  .tlab .star{color:var(--amber);margin-right:6px}
   .tname{
-    font-family:'Fraunces',serif;font-weight:500;
-    font-size:clamp(26px,2.4vw,38px);line-height:1;
-    letter-spacing:-.02em;text-transform:lowercase;margin-top:18px;
+    font-family:'Bricolage Grotesque',sans-serif;font-weight:700;
+    font-size:clamp(24px,2.2vw,34px);line-height:1;
+    letter-spacing:-.02em;margin-top:18px;
   }
-  .tname em{color:var(--rust);font-weight:400}
-  .tdesc{margin-top:12px;font-size:14px;line-height:1.5;opacity:.85}
+  .tname em{
+    font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;
+    color:var(--amber);
+  }
+  .tdesc{margin-top:12px;font-size:14px;line-height:1.5;color:var(--paper-mute)}
 
   /* ── skills ── */
-  .skills-wrap{display:flex;flex-direction:column;gap:30px}
+  .skills-wrap{display:flex;flex-direction:column;gap:26px}
   .skill-row{
     display:grid;grid-template-columns:160px 1fr;gap:30px;
-    padding-bottom:24px;border-bottom:1px solid var(--line);
+    padding-bottom:24px;border-bottom:1px solid var(--paper-faint);
     align-items:baseline;
   }
   @media (max-width:680px){.skill-row{grid-template-columns:1fr;gap:10px}}
   .skill-cat{
     font-family:'JetBrains Mono',monospace;font-size:11px;
-    letter-spacing:.1em;text-transform:uppercase;opacity:.6;
-    padding-top:8px;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--paper-mute);
   }
   .skill-tags{display:flex;flex-wrap:wrap;gap:8px}
   .stag{
-    padding:8px 14px;border:1px solid var(--ink);border-radius:999px;
-    font-size:13px;transition:all .2s ease;
+    padding:9px 14px;border-radius:999px;
+    background:rgba(241,233,216,.04);
+    border:1px solid var(--paper-faint);
+    backdrop-filter:blur(10px);
+    font-size:13px;transition:all .25s ease;
   }
-  .stag:hover{background:var(--ink);color:var(--paper);transform:translateY(-2px)}
-  .stag.hot{background:var(--ink);color:var(--paper)}
-  .stag.hot:hover{background:var(--rust);border-color:var(--rust)}
+  .stag:hover{
+    background:rgba(255,122,44,.15);border-color:rgba(255,122,44,.4);
+    transform:translateY(-2px);
+  }
+  .stag.hot{
+    background:rgba(255,122,44,.12);border-color:rgba(255,122,44,.35);
+  }
 
   /* ── contact ── */
   .contact{
-    padding:120px 28px;text-align:center;border-top:1px solid var(--line);
-    position:relative;overflow:hidden;
+    padding:120px 28px;text-align:center;position:relative;
+    overflow:hidden;border-top:1px solid var(--paper-faint);
   }
+  .contact::before{
+    content:"";position:absolute;inset:-30%;
+    background:
+      radial-gradient(circle at 30% 50%, rgba(255,122,44,.18) 0%, transparent 40%),
+      radial-gradient(circle at 70% 50%, rgba(45,111,255,.15) 0%, transparent 45%);
+    filter:blur(50px);
+    animation:cmove 12s ease-in-out infinite;
+  }
+  @keyframes cmove{50%{transform:translate(40px,-30px)}}
+  .contact > *{position:relative;z-index:2}
+
   .contact-kick{
     font-family:'JetBrains Mono',monospace;font-size:11px;
-    letter-spacing:.1em;text-transform:uppercase;opacity:.55;margin-bottom:24px;
+    letter-spacing:.1em;text-transform:uppercase;
+    color:var(--paper-mute);margin-bottom:24px;
   }
   .contact h2{
-    font-family:'Fraunces',serif;font-weight:500;
-    font-size:clamp(60px,12vw,180px);
-    line-height:.85;letter-spacing:-.04em;text-transform:lowercase;
+    font-family:'Bricolage Grotesque',sans-serif;font-weight:700;
+    font-size:clamp(56px,11vw,160px);line-height:.88;letter-spacing:-.04em;
   }
-  .contact h2 em{color:var(--rust);font-weight:400}
-  .contact-links{
-    margin-top:50px;display:flex;justify-content:center;gap:14px;flex-wrap:wrap;
+  .contact h2 em{
+    font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;
+    background:linear-gradient(135deg, var(--amber) 0%, var(--violet) 100%);
+    -webkit-background-clip:text;background-clip:text;
+    -webkit-text-fill-color:transparent;
   }
+  .contact-links{margin-top:46px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
   .contact-links a{
-    font-family:'Fraunces',serif;font-weight:500;font-size:18px;
-    padding:14px 24px;border:1px solid var(--ink);border-radius:999px;
-    transition:all .2s ease;text-transform:lowercase;
+    font-size:15px;padding:14px 22px;border-radius:999px;
+    background:rgba(241,233,216,.04);
+    border:1px solid var(--paper-faint);
+    backdrop-filter:blur(10px);
+    transition:all .25s ease;
   }
-  .contact-links a em{color:var(--rust)}
-  .contact-links a:hover{background:var(--ink);color:var(--paper)}
-  .contact-links a:hover em{color:var(--paper)}
+  .contact-links a:hover{
+    background:var(--paper);color:var(--bg);border-color:var(--paper);
+  }
 
   /* ── footer ── */
   footer{
     padding:24px 28px;display:flex;justify-content:space-between;
-    flex-wrap:wrap;gap:14px;border-top:1px solid var(--line);
+    flex-wrap:wrap;gap:14px;border-top:1px solid var(--paper-faint);
     font-family:'JetBrains Mono',monospace;font-size:11px;
-    letter-spacing:.08em;text-transform:uppercase;opacity:.65;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--paper-mute);
   }
 
   /* reveals */
-  .rv{opacity:0;transform:translateY(24px);transition:opacity .8s ease, transform .8s ease}
+  .rv{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease}
   .rv.in{opacity:1;transform:translateY(0)}
 </style>
 </head>
 <body>
 
-<!-- ── status ── -->
-<div class="top">
-  <div class="l">
-    <span class="live"><span class="pulse"></span>open to roles · ’26</span>
-    <span>HOU · TX</span>
+<div class="frame">
+
+  <!-- status -->
+  <div class="status">
+    <div class="l">
+      <span class="live"><span class="pulse"></span>open to ’26 roles</span>
+      <span>HOU · TX</span>
+    </div>
+    <div class="r">
+      <span id="clock">—</span>
+      <span>v · 2026</span>
+    </div>
   </div>
-  <div class="r">
-    <span id="clock">—</span>
-    <span>v · 2026</span>
+
+  <!-- nav -->
+  <nav>
+    <div class="brand">minh<span class="dot">.</span>ho</div>
+    <div class="menu">
+      <a href="#about">about</a>
+      <a href="#principles">principles</a>
+      <a href="#work">work</a>
+      <a href="#projects">projects</a>
+      <a href="#trophies">trophies</a>
+      <a href="mailto:minhhoviet2003@gmail.com" class="cta">say hi ↗</a>
+    </div>
+  </nav>
+
+  <!-- hero -->
+  <section class="hero">
+    <div class="orb"></div>
+    <div class="orb-sm"></div>
+
+    <div class="kicker">bauer ’26 · MIS &amp; management</div>
+
+    <h1 class="title">
+      data, systems,<br>
+      &amp; <em>quiet clarity.</em>
+    </h1>
+
+    <div class="hero-bottom">
+      <div>
+        <p class="hero-bio">
+          hi, i'm <strong>minh</strong> — a senior at the university of houston cleaning <em>messy data</em> and shipping power bi dashboards that finally tell the truth.
+        </p>
+        <div class="pills">
+          <span class="pill">Power BI</span>
+          <span class="pill">Microsoft Fabric</span>
+          <span class="pill">SQL</span>
+          <span class="pill">Python</span>
+          <span class="pill">HTML / CSS / JS</span>
+        </div>
+      </div>
+      <div class="hero-photo">
+        portrait —<br>drop a photo here
+      </div>
+    </div>
+  </section>
+
+  <!-- marquee -->
+  <div class="mq">
+    <div class="mq-track">
+      <span>data <i>&amp;</i> systems</span><span>power bi</span><span>sql <i>queries</i></span><span>microsoft fabric</span><span>project <i>management</i></span><span>dashboards</span>
+      <span>data <i>&amp;</i> systems</span><span>power bi</span><span>sql <i>queries</i></span><span>microsoft fabric</span><span>project <i>management</i></span><span>dashboards</span>
+    </div>
   </div>
+
+  <!-- about -->
+  <section id="about" class="rv">
+    <div class="s-head">
+      <div>
+        <div class="s-num">[01] / about</div>
+        <h2 class="s-title">a short <em>introduction.</em></h2>
+      </div>
+      <div class="s-aside">the part where i tell you what i actually do — without the resume voice.</div>
+    </div>
+
+    <div class="about-body">
+      <p>i'm <strong>minh ho</strong>. born and raised around houston, currently finishing a double major in <em>management information systems</em> and <em>management</em> at c.t. bauer.</p>
+      <p>most of my time goes to the data side. at <strong>the lab consulting</strong> i clean datasets nobody wants to look at, map relationships between systems that were never supposed to talk, and rebuild power bi dashboards until they tell the truth instead of a vibe.</p>
+      <p>before that — talent acquisition externship at <strong>credera</strong>, an <em>11.6% query speedup</em> on an oracle database, a $250k simulated budget i shipped on time, and four years coaching tennis to kids with absurd amounts of energy.</p>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat">
+        <div class="stat-num">3.5</div>
+        <div class="stat-lab">gpa · 3× dean's list</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">10<em>+</em></div>
+        <div class="stat-lab">power bi dashboards</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num"><em>$</em>250k</div>
+        <div class="stat-lab">project budget run</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num"><em>11.6</em>%</div>
+        <div class="stat-lab">faster sql queries</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- principles -->
+  <section id="principles" class="rv">
+    <div class="s-head">
+      <div>
+        <div class="s-num">[02] / how i work</div>
+        <h2 class="s-title">operating <em>principles.</em></h2>
+      </div>
+      <div class="s-aside">four rules i actually follow, not the ones that sound nice on linkedin.</div>
+    </div>
+
+    <div class="princ">
+      <div class="princ-item">
+        <div class="princ-rom">i.</div>
+        <div class="princ-text">clean the <em>data</em> first.<br>everything downstream is a lie until you do.</div>
+      </div>
+      <div class="princ-item">
+        <div class="princ-rom">ii.</div>
+        <div class="princ-text">a slow query that <em>works</em> beats a fast one that doesn't.<br>then you make it fast.</div>
+      </div>
+      <div class="princ-item">
+        <div class="princ-rom">iii.</div>
+        <div class="princ-text">document as you go.<br>future-you is a <em>different person</em> with a worse memory.</div>
+      </div>
+      <div class="princ-item">
+        <div class="princ-rom">iv.</div>
+        <div class="princ-text">ship the dashboard, then <em>iterate.</em><br>nobody learns from a deck that never went out.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- work -->
+  <section id="work" class="rv">
+    <div class="s-head">
+      <div>
+        <div class="s-num">[03] / experience</div>
+        <h2 class="s-title">where i've <em>worked.</em></h2>
+      </div>
+      <div class="s-aside">two short paragraphs per role. the rest is on linkedin.</div>
+    </div>
+
+    <div class="work-list">
+      <div class="work-row">
+        <div class="work-yr">2025 — NOW</div>
+        <div>
+          <div class="work-name">the lab <em>consulting</em></div>
+          <div class="work-role">data analyst intern · houston, tx</div>
+          <p class="work-desc">standardized data for <em>100+ employees and products</em>, scrubbed and rebuilt 10+ power bi dashboards, and documented internal workflows so the next person doesn't have to reverse-engineer them.</p>
+        </div>
+        <div class="work-tag">data · ongoing</div>
+      </div>
+
+      <div class="work-row">
+        <div class="work-yr">2022 — 2025</div>
+        <div>
+          <div class="work-name">youth league <em>tennis</em></div>
+          <div class="work-role">tennis coach · katy, tx</div>
+          <p class="work-desc">three years coaching beginner groups of <em>10 kids ages 5–8</em>. fundamentals, footwork, ball-feeding drills, and convincing six-year-olds that a forehand and a baseball swing are not the same thing.</p>
+        </div>
+        <div class="work-tag">coaching · 3 yrs</div>
+      </div>
+
+      <div class="work-row">
+        <div class="work-yr">2024</div>
+        <div>
+          <div class="work-name"><em>credera</em></div>
+          <div class="work-role">talent acquisition externship · houston, tx</div>
+          <p class="work-desc">researched optimal universities for credera's recruiting strategy, built college-specific market presentations, and helped frame partnerships with <em>SMU, UTSA, and UH</em>.</p>
+        </div>
+        <div class="work-tag">strategy</div>
+      </div>
+
+      <div class="work-row">
+        <div class="work-yr">2021 — 2022</div>
+        <div>
+          <div class="work-name">tennis <em>express</em></div>
+          <div class="work-role">online picker · warehouse · houston, tx</div>
+          <p class="work-desc">200+ orders fulfilled across web, store pickup, and amazon. inventory restocked, locations updated in the system, and daily inspections of <em>$5k worth</em> of stock.</p>
+        </div>
+        <div class="work-tag">ops</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- projects -->
+  <section id="projects" class="rv">
+    <div class="s-head">
+      <div>
+        <div class="s-num">[04] / projects</div>
+        <h2 class="s-title">things i've <em>built.</em></h2>
+      </div>
+      <div class="s-aside">academic projects that turned into the kind of work i'd actually want to do.</div>
+    </div>
+
+    <div class="proj-grid">
+      <div class="proj span4 glow">
+        <div class="proj-num">project · 01</div>
+        <div class="proj-name">brighttech <em>solutions.</em></div>
+        <p class="proj-body">led a team of 4 to design a performance review system for a simulated IT consulting firm. owned scope, schedule, and a <em>$250k budget</em>, all delivered on time. stakeholder presentations got called out for clarity and execution.</p>
+        <div class="proj-tags"><span>project mgmt</span><span>systems design</span><span>MIS 4374</span></div>
+      </div>
+
+      <div class="proj span2 glow-blue">
+        <div class="proj-num">project · 02</div>
+        <div class="proj-name">mg horse <em>habit.</em></div>
+        <p class="proj-body">15 oracle tables, complex joins &amp; subqueries, and an <em>11.6% query speedup</em>.</p>
+        <div class="proj-stat"><em>11.6%</em></div>
+      </div>
+
+      <div class="proj span2">
+        <div class="proj-num">project · 03</div>
+        <div class="proj-name">kpmg ethics <em>case.</em></div>
+        <p class="proj-body">led a 7-person team analyzing amazon's AI surveillance and its impact on driver well-being.</p>
+        <div class="proj-tags"><span>research</span><span>ethics</span></div>
+      </div>
+
+      <div class="proj span4">
+        <div class="proj-num">project · 04</div>
+        <div class="proj-name">uh tennis <em>club.</em></div>
+        <p class="proj-body">finance &amp; events officer. running a <em>$10k+ annual budget</em>, processing reimbursements, and planning tournaments and socials for <em>100+ members</em>. also built the membership form that splits players into competitive vs. non-competitive sheets.</p>
+        <div class="proj-tags"><span>leadership</span><span>finance</span><span>events</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- trophies -->
+  <section id="trophies" class="rv">
+    <div class="s-head">
+      <div>
+        <div class="s-num">[05] / proud of</div>
+        <h2 class="s-title">trophy <em>shelf.</em></h2>
+      </div>
+      <div class="s-aside">small, but real.</div>
+    </div>
+
+    <div class="troph">
+      <div class="tcard feat">
+        <div class="tlab"><span class="star">★</span>featured · 3× recognition</div>
+        <div class="tname">three-time <em>dean's list.</em></div>
+        <div class="tdesc">multi-semester academic recognition at the c.t. bauer college of business — <em>cumulative 3.5 gpa</em> across MIS and management coursework.</div>
+      </div>
+
+      <div class="tcard">
+        <div class="tlab">data · 2025</div>
+        <div class="tname">10<em>+</em> dashboards <em>shipped.</em></div>
+        <div class="tdesc">cleaned and rebuilt power bi dashboards at the lab consulting, improving accuracy and visualization performance.</div>
+      </div>
+      <div class="tcard">
+        <div class="tlab">database · 2024</div>
+        <div class="tname"><em>11.6%</em> faster sql.</div>
+        <div class="tdesc">measurable performance improvement on oracle queries for a 15-table customer + equine database.</div>
+      </div>
+      <div class="tcard">
+        <div class="tlab">project mgmt · 2025</div>
+        <div class="tname"><em>$250k</em> shipped on time.</div>
+        <div class="tdesc">led a 4-person team through a full project lifecycle for a simulated IT consulting firm.</div>
+      </div>
+      <div class="tcard">
+        <div class="tlab">leadership · 2024 →</div>
+        <div class="tname">tennis club <em>officer.</em></div>
+        <div class="tdesc">finance &amp; events officer running a $10k+ budget for a 100+ member club.</div>
+      </div>
+      <div class="tcard">
+        <div class="tlab">externship · 2024</div>
+        <div class="tname">credera × <em>3 unis.</em></div>
+        <div class="tdesc">strategic recruiting frameworks that established partnerships with SMU, UTSA, and UH.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- skills -->
+  <section id="skills" class="rv">
+    <div class="s-head">
+      <div>
+        <div class="s-num">[06] / toolbox</div>
+        <h2 class="s-title">stack &amp; <em>skills.</em></h2>
+      </div>
+    </div>
+
+    <div class="skills-wrap">
+      <div class="skill-row">
+        <div class="skill-cat">// data &amp; analytics</div>
+        <div class="skill-tags">
+          <span class="stag hot">power bi</span>
+          <span class="stag hot">microsoft fabric</span>
+          <span class="stag hot">sql</span>
+          <span class="stag">ms azure</span>
+          <span class="stag">python</span>
+          <span class="stag">r</span>
+          <span class="stag">json</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-cat">// software &amp; web</div>
+        <div class="skill-tags">
+          <span class="stag">java</span>
+          <span class="stag">html</span>
+          <span class="stag">css</span>
+          <span class="stag">javascript</span>
+          <span class="stag">visual studio</span>
+          <span class="stag">netbeans</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-cat">// productivity</div>
+        <div class="skill-tags">
+          <span class="stag">excel</span>
+          <span class="stag">word</span>
+          <span class="stag">powerpoint</span>
+          <span class="stag">access</span>
+          <span class="stag">teams</span>
+          <span class="stag">sharepoint</span>
+          <span class="stag">smartsheet</span>
+          <span class="stag">canva</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-cat">// languages</div>
+        <div class="skill-tags">
+          <span class="stag">english · fluent</span>
+          <span class="stag">vietnamese · fluent</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- contact -->
+  <section id="contact" class="contact rv">
+    <div class="contact-kick">// say hi</div>
+    <h2>let's <em>build</em><br>something <em>good.</em></h2>
+    <div class="contact-links">
+      <a href="mailto:minhhoviet2003@gmail.com">email ↗</a>
+      <a href="https://linkedin.com/in/minhhoviet1" target="_blank" rel="noopener">linkedin ↗</a>
+      <a href="tel:+17133306706">713 · 330 · 6706</a>
+    </div>
+  </section>
+
+  <!-- footer -->
+  <footer>
+    <div>© 2026 minh ho · clean &amp; ship</div>
+    <div><a href="#" style="text-decoration:underline">↑ back to top</a></div>
+  </footer>
+
 </div>
-
-<!-- ── nav ── -->
-<nav>
-  <div class="brand"><span class="star">✦</span> minh ho</div>
-  <div class="menu">
-    <a href="#about">about</a>
-    <a href="#principles">principles</a>
-    <a href="#work">work</a>
-    <a href="#projects">projects</a>
-    <a href="#trophies">trophies</a>
-    <a href="#contact">contact</a>
-  </div>
-</nav>
-
-<!-- ── hero ── -->
-<section class="hero">
-  <div class="kicker">bauer college ’26 · MIS &amp; management</div>
-
-  <h1 class="hero-title">
-    clean <span class="amp">&amp;</span><br>
-    <em>ship.</em>
-  </h1>
-
-  <div class="hero-sub">
-    <p class="hero-bio">
-      hi, i'm <strong>minh</strong> — a senior at the university of houston who likes <em>messy data</em>, <em>tight queries</em>, and dashboards that finally work the way clients thought they did.
-    </p>
-    <div class="hero-side">
-      <div class="hero-stats">
-        <div class="hs"><div class="hs-num">3.5</div><div class="hs-lab">gpa · 3× dean's list</div></div>
-        <div class="hs"><div class="hs-num">10<em>+</em></div><div class="hs-lab">power bi dashboards</div></div>
-        <div class="hs"><div class="hs-num"><em>$</em>250k</div><div class="hs-lab">project budget run</div></div>
-      </div>
-      <div class="cta-row">
-        <a href="mailto:minhhoviet2003@gmail.com" class="lk fill">email me ↗</a>
-        <a href="https://linkedin.com/in/minhhoviet1" target="_blank" rel="noopener" class="lk">linkedin ↗</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── marquee ── -->
-<div class="mq">
-  <div class="mq-track">
-    <span>data <i>&amp;</i> systems</span><span>power bi</span><span>sql <i>queries</i></span><span>microsoft fabric</span><span>project <i>management</i></span><span>dashboards</span>
-    <span>data <i>&amp;</i> systems</span><span>power bi</span><span>sql <i>queries</i></span><span>microsoft fabric</span><span>project <i>management</i></span><span>dashboards</span>
-  </div>
-</div>
-
-<!-- ── about ── -->
-<section id="about" class="rv">
-  <div class="s-head">
-    <div>
-      <div class="s-num">[01] / about</div>
-      <h2 class="s-title">a quick <em>introduction.</em></h2>
-    </div>
-    <div class="s-aside">the part where i tell you what i actually do — without the resume voice.</div>
-  </div>
-
-  <div class="about-body">
-    <p>
-      i'm <strong>minh ho</strong>. born and raised around houston, currently finishing a double major in <em>management information systems</em> and <em>management</em> at c.t. bauer.
-    </p>
-    <p>
-      most of my time goes to the data side. at <strong>the lab consulting</strong> i clean datasets nobody wants to look at, map relationships between systems that were never supposed to talk, and rebuild power bi dashboards until they tell the truth instead of a vibe. <span class="hl">10+ dashboards cleaned</span> and counting.
-    </p>
-    <p>
-      before that — talent acquisition externship at <strong>credera</strong>, an <em>11.6% query speedup</em> on an oracle database, a $250k simulated budget i shipped on time, and four years coaching tennis to kids with absurd amounts of energy.
-    </p>
-    <p>
-      outside of work: <em>tennis</em>, pickleball, sneakers, cooking. fluent in english &amp; vietnamese.
-    </p>
-  </div>
-</section>
-
-<!-- ── principles ── -->
-<section id="principles" class="rv">
-  <div class="s-head">
-    <div>
-      <div class="s-num">[02] / how i work</div>
-      <h2 class="s-title">operating <em>principles.</em></h2>
-    </div>
-    <div class="s-aside">four rules i actually follow, not the ones that sound nice on linkedin.</div>
-  </div>
-
-  <div class="princ">
-    <div class="princ-item">
-      <div class="princ-rom">i.</div>
-      <div class="princ-text">clean the <em>data</em> first.<br>everything downstream is a lie until you do.</div>
-    </div>
-    <div class="princ-item">
-      <div class="princ-rom">ii.</div>
-      <div class="princ-text">a slow query that <em>works</em> beats a fast one that doesn't.<br>then you make it fast.</div>
-    </div>
-    <div class="princ-item">
-      <div class="princ-rom">iii.</div>
-      <div class="princ-text">document as you go.<br>future-you is a <em>different person</em> with a worse memory.</div>
-    </div>
-    <div class="princ-item">
-      <div class="princ-rom">iv.</div>
-      <div class="princ-text">ship the dashboard, then <em>iterate.</em><br>nobody learns from a deck that never went out.</div>
-    </div>
-  </div>
-</section>
-
-<!-- ── work ── -->
-<section id="work" class="rv">
-  <div class="s-head">
-    <div>
-      <div class="s-num">[03] / experience</div>
-      <h2 class="s-title">where i've <em>worked.</em></h2>
-    </div>
-    <div class="s-aside">two short paragraphs per role. the rest is on linkedin.</div>
-  </div>
-
-  <div class="work-list">
-    <div class="work-row">
-      <div class="work-yr">2025 — NOW</div>
-      <div>
-        <div class="work-name">the lab <em>consulting</em></div>
-        <div class="work-role">data analyst intern · houston, tx</div>
-        <p class="work-desc">standardized data for <em>100+ employees and products</em>, scrubbed and rebuilt 10+ power bi dashboards, and documented internal workflows so the next person doesn't have to reverse-engineer them. the unglamorous work that actually makes things faster.</p>
-      </div>
-      <div class="work-tag">data · ongoing</div>
-    </div>
-
-    <div class="work-row">
-      <div class="work-yr">2022 — 2025</div>
-      <div>
-        <div class="work-name">youth league <em>tennis</em></div>
-        <div class="work-role">tennis coach · katy, tx</div>
-        <p class="work-desc">three years coaching beginner groups of <em>10 kids ages 5–8</em>. fundamentals, footwork, ball-feeding drills, and the part where you convince a six-year-old that a forehand and a baseball swing are not the same thing.</p>
-      </div>
-      <div class="work-tag">coaching · 3 yrs</div>
-    </div>
-
-    <div class="work-row">
-      <div class="work-yr">2024</div>
-      <div>
-        <div class="work-name"><em>credera</em></div>
-        <div class="work-role">talent acquisition externship · houston, tx</div>
-        <p class="work-desc">researched optimal universities for credera's recruiting strategy, built college-specific market presentations, and helped frame partnerships with <em>SMU, UTSA, and UH</em>. consultant brain, applied to picking schools.</p>
-      </div>
-      <div class="work-tag">strategy</div>
-    </div>
-
-    <div class="work-row">
-      <div class="work-yr">2021 — 2022</div>
-      <div>
-        <div class="work-name">tennis <em>express</em></div>
-        <div class="work-role">online picker · warehouse · houston, tx</div>
-        <p class="work-desc">200+ orders fulfilled across web, store pickup, and amazon. inventory restocked, locations updated in the system, and daily inspections of $5k worth of stock. taught me that <em>operations is a real skill</em>, not a default.</p>
-      </div>
-      <div class="work-tag">ops</div>
-    </div>
-  </div>
-</section>
-
-<!-- ── projects ── -->
-<section id="projects" class="rv">
-  <div class="s-head">
-    <div>
-      <div class="s-num">[04] / projects</div>
-      <h2 class="s-title">things i've <em>built.</em></h2>
-    </div>
-    <div class="s-aside">academic projects that turned into the kind of work i'd actually want to do.</div>
-  </div>
-
-  <div class="proj-grid">
-    <div class="proj span4">
-      <div class="proj-num">project · 01</div>
-      <div class="proj-name">brighttech <em>solutions</em>.</div>
-      <p class="proj-body">led a team of 4 to design a performance review system for a simulated IT consulting firm. owned scope, schedule, and a <em>$250k budget</em>, all delivered on time. stakeholder presentations got called out for clarity and execution — the part i quietly worked hardest on.</p>
-      <div class="proj-tags"><span>project mgmt</span><span>systems design</span><span>MIS 4374</span></div>
-    </div>
-
-    <div class="proj span2 dark">
-      <div class="proj-num">project · 02</div>
-      <div class="proj-name">mg horse <em>habit</em>.</div>
-      <p class="proj-body">15 oracle tables, complex joins &amp; subqueries, and an <em>11.6% query speedup</em> on customer/equine data.</p>
-      <div class="proj-stat"><em>11.6%</em></div>
-      <div class="proj-tags"><span>oracle</span><span>sql</span></div>
-    </div>
-
-    <div class="proj span2 rust">
-      <div class="proj-num">project · 03</div>
-      <div class="proj-name">kpmg ethics <em>case</em>.</div>
-      <p class="proj-body">led a 7-person team analyzing amazon's AI surveillance and its impact on driver well-being. ethics + tech, the way it actually plays out.</p>
-      <div class="proj-tags"><span>research</span><span>ethics</span></div>
-    </div>
-
-    <div class="proj span4">
-      <div class="proj-num">project · 04</div>
-      <div class="proj-name">uh tennis <em>club</em>.</div>
-      <p class="proj-body">finance &amp; events officer. running a <em>$10k+ annual budget</em>, processing reimbursements, and planning tournaments and socials for <em>100+ members</em>. also built the membership form that splits players into competitive vs. non-competitive sheets — small thing, removed a lot of manual work.</p>
-      <div class="proj-tags"><span>leadership</span><span>finance</span><span>events</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- ── trophies ── -->
-<section id="trophies" class="rv">
-  <div class="s-head">
-    <div>
-      <div class="s-num">[05] / proud of</div>
-      <h2 class="s-title">trophy <em>shelf.</em></h2>
-    </div>
-    <div class="s-aside">small, but real.</div>
-  </div>
-
-  <div class="troph">
-    <div class="tcard feat">
-      <div class="tlab"><span class="star">★</span> featured · 3× recognition</div>
-      <div class="tname">three-time <em>dean's list</em>.</div>
-      <div class="tdesc">multi-semester academic recognition at the c.t. bauer college of business — <em>cumulative 3.5 gpa</em> across MIS and management coursework.</div>
-    </div>
-
-    <div class="tcard">
-      <div class="tlab">data · 2025</div>
-      <div class="tname">10<em>+</em> dashboards <em>shipped</em>.</div>
-      <div class="tdesc">cleaned and rebuilt power bi dashboards at the lab consulting, improving accuracy and visualization performance.</div>
-    </div>
-
-    <div class="tcard">
-      <div class="tlab">database · 2024</div>
-      <div class="tname"><em>11.6%</em> faster sql.</div>
-      <div class="tdesc">measurable performance improvement on oracle queries for a 15-table customer + equine database.</div>
-    </div>
-
-    <div class="tcard">
-      <div class="tlab">project mgmt · 2025</div>
-      <div class="tname"><em>$250k</em> shipped on time.</div>
-      <div class="tdesc">led a 4-person team through a full project lifecycle for a simulated IT consulting firm. on scope, on schedule.</div>
-    </div>
-
-    <div class="tcard">
-      <div class="tlab">leadership · 2024 →</div>
-      <div class="tname">tennis club <em>officer</em>.</div>
-      <div class="tdesc">finance &amp; events officer running a $10k+ budget for a 100+ member club. tournaments, mixers, charity matches.</div>
-    </div>
-
-    <div class="tcard">
-      <div class="tlab">externship · 2024</div>
-      <div class="tname">credera × <em>3 unis</em>.</div>
-      <div class="tdesc">strategic recruiting frameworks that established partnerships with SMU, UTSA, and UH.</div>
-    </div>
-  </div>
-</section>
-
-<!-- ── skills ── -->
-<section id="skills" class="rv">
-  <div class="s-head">
-    <div>
-      <div class="s-num">[06] / toolbox</div>
-      <h2 class="s-title">stack &amp; <em>skills.</em></h2>
-    </div>
-  </div>
-
-  <div class="skills-wrap">
-    <div class="skill-row">
-      <div class="skill-cat">// data &amp; analytics</div>
-      <div class="skill-tags">
-        <span class="stag hot">power bi</span>
-        <span class="stag hot">microsoft fabric</span>
-        <span class="stag hot">sql</span>
-        <span class="stag">ms azure</span>
-        <span class="stag">python</span>
-        <span class="stag">r</span>
-        <span class="stag">json</span>
-      </div>
-    </div>
-    <div class="skill-row">
-      <div class="skill-cat">// software &amp; web</div>
-      <div class="skill-tags">
-        <span class="stag">java</span>
-        <span class="stag">html</span>
-        <span class="stag">css</span>
-        <span class="stag">javascript</span>
-        <span class="stag">visual studio</span>
-        <span class="stag">netbeans</span>
-      </div>
-    </div>
-    <div class="skill-row">
-      <div class="skill-cat">// productivity</div>
-      <div class="skill-tags">
-        <span class="stag">excel</span>
-        <span class="stag">word</span>
-        <span class="stag">powerpoint</span>
-        <span class="stag">access</span>
-        <span class="stag">teams</span>
-        <span class="stag">sharepoint</span>
-        <span class="stag">smartsheet</span>
-        <span class="stag">canva</span>
-      </div>
-    </div>
-    <div class="skill-row">
-      <div class="skill-cat">// languages</div>
-      <div class="skill-tags">
-        <span class="stag">english · fluent</span>
-        <span class="stag">vietnamese · fluent</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── contact ── -->
-<section id="contact" class="contact rv">
-  <div class="contact-kick">// say hi</div>
-  <h2>let's <em>build</em><br>something <em>good.</em></h2>
-  <div class="contact-links">
-    <a href="mailto:minhhoviet2003@gmail.com"><em>email</em> ↗</a>
-    <a href="https://linkedin.com/in/minhhoviet1" target="_blank" rel="noopener"><em>linked</em>in ↗</a>
-    <a href="tel:+17133306706">713 · <em>330</em> · 6706</a>
-  </div>
-</section>
-
-<!-- ── footer ── -->
-<footer>
-  <div>© 2026 minh ho · clean &amp; ship.</div>
-  <div><a href="#" style="text-decoration:underline">↑ back to top</a></div>
-</footer>
 
 <script>
-  // live houston time
   function tick(){
     const opts={hour:'2-digit',minute:'2-digit',timeZone:'America/Chicago',hour12:false};
     document.getElementById('clock').textContent=new Date().toLocaleTimeString('en-US',opts)+' CST';
   }
   tick();setInterval(tick,30000);
 
-  // reveal
   const io=new IntersectionObserver((es)=>{
     es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
   },{threshold:.1});
