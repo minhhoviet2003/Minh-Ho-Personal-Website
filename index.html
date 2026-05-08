@@ -246,18 +246,18 @@
   .about-body em{color:var(--paper)}
 
   .stat-grid{
-    display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+    display:grid;grid-template-columns:repeat(3,1fr);gap:0;
     margin-top:50px;border-top:1px solid var(--paper-faint);
     border-bottom:1px solid var(--paper-faint);
   }
-  @media (max-width:780px){.stat-grid{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:780px){.stat-grid{grid-template-columns:1fr}}
   .stat{
     padding:24px 18px;border-right:1px solid var(--paper-faint);
   }
   .stat:last-child{border-right:none}
   @media (max-width:780px){
-    .stat:nth-child(2){border-right:none}
-    .stat:nth-child(1),.stat:nth-child(2){border-bottom:1px solid var(--paper-faint)}
+    .stat{border-right:none;border-bottom:1px solid var(--paper-faint)}
+    .stat:last-child{border-bottom:none}
   }
   .stat-num{
     font-family:'Bricolage Grotesque',sans-serif;font-weight:700;
@@ -524,8 +524,8 @@
   <!-- status -->
   <div class="status">
     <div class="l">
-      <span class="live"><span class="pulse"></span>open to ’26 roles</span>
       <span>HOU · TX</span>
+      <span>bauer ’26</span>
     </div>
     <div class="r">
       <span id="clock">—</span>
@@ -603,10 +603,6 @@
     </div>
 
     <div class="stat-grid">
-      <div class="stat">
-        <div class="stat-num">3.5</div>
-        <div class="stat-lab">gpa · 3× dean's list</div>
-      </div>
       <div class="stat">
         <div class="stat-num">10<em>+</em></div>
         <div class="stat-lab">power bi dashboards</div>
@@ -760,7 +756,7 @@
       <div class="tcard feat">
         <div class="tlab"><span class="star">★</span>featured · 3× recognition</div>
         <div class="tname">three-time <em>dean's list.</em></div>
-        <div class="tdesc">multi-semester academic recognition at the c.t. bauer college of business — <em>cumulative 3.5 gpa</em> across MIS and management coursework.</div>
+        <div class="tdesc">multi-semester academic recognition at the c.t. bauer college of business across <em>MIS and management</em> coursework.</div>
       </div>
 
       <div class="tcard">
