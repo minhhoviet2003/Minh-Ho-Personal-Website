@@ -3,19 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Minh Ho | Data Analyst & MIS Student</title>
+  <title>Minh Ho | Analyze & Build</title>
   <style>
     :root {
-      --bg: #0f172a;
-      --bg-soft: #111827;
-      --card: rgba(255, 255, 255, 0.08);
-      --card-border: rgba(255, 255, 255, 0.14);
-      --text: #f8fafc;
-      --muted: #cbd5e1;
-      --accent: #38bdf8;
-      --accent-2: #a78bfa;
-      --white: #ffffff;
-      --shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+      --cream: #f6f1e8;
+      --ink: #101010;
+      --muted: #5f5b52;
+      --line: #d7d0c3;
+      --card: #fffaf1;
+      --dark: #111111;
+      --accent: #ff6b35;
+      --accent-2: #0ea5e9;
+      --green: #2f6f4e;
+      --radius-xl: 34px;
+      --radius-lg: 24px;
+      --shadow: 0 18px 50px rgba(16, 16, 16, 0.12);
     }
 
     * {
@@ -29,12 +31,11 @@
     }
 
     body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.25), transparent 32%),
-                  radial-gradient(circle at top right, rgba(167, 139, 250, 0.2), transparent 30%),
-                  var(--bg);
-      color: var(--text);
-      line-height: 1.6;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      line-height: 1.5;
+      overflow-x: hidden;
     }
 
     a {
@@ -43,376 +44,580 @@
     }
 
     .container {
-      width: min(1120px, 92%);
+      width: min(1180px, 92%);
       margin: 0 auto;
     }
 
+    .grain {
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      opacity: 0.05;
+      z-index: 9999;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
     header {
-      position: sticky;
-      top: 0;
+      position: fixed;
+      top: 18px;
+      left: 0;
+      right: 0;
       z-index: 100;
-      backdrop-filter: blur(18px);
-      background: rgba(15, 23, 42, 0.76);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     nav {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 18px 0;
+      padding: 12px 14px 12px 18px;
+      border: 1px solid rgba(16, 16, 16, 0.1);
+      background: rgba(246, 241, 232, 0.78);
+      backdrop-filter: blur(18px);
+      border-radius: 999px;
+      box-shadow: 0 12px 34px rgba(16, 16, 16, 0.08);
     }
 
-    .logo {
-      font-weight: 800;
-      letter-spacing: 0.5px;
-      font-size: 1.1rem;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
     }
 
-    .logo span {
-      color: var(--accent);
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      color: var(--cream);
+      background: var(--ink);
+      border-radius: 50%;
+      font-size: 0.82rem;
     }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 22px;
-      font-size: 0.95rem;
+      gap: 8px;
+    }
+
+    .nav-links a {
+      padding: 9px 13px;
+      border-radius: 999px;
       color: var(--muted);
+      font-size: 0.92rem;
+      transition: 0.2s ease;
     }
 
     .nav-links a:hover {
-      color: var(--white);
+      color: var(--ink);
+      background: rgba(16, 16, 16, 0.07);
+    }
+
+    .nav-cta {
+      background: var(--ink) !important;
+      color: var(--cream) !important;
+      margin-left: 4px;
     }
 
     .menu-btn {
       display: none;
-      background: none;
-      border: none;
-      color: var(--text);
-      font-size: 1.5rem;
+      width: 40px;
+      height: 40px;
+      border: 0;
+      border-radius: 50%;
+      background: var(--ink);
+      color: var(--cream);
+      font-size: 1.05rem;
       cursor: pointer;
     }
 
     .hero {
-      min-height: 88vh;
+      min-height: 100vh;
+      padding: 132px 0 76px;
       display: grid;
-      grid-template-columns: 1.25fr 0.75fr;
-      align-items: center;
-      gap: 48px;
-      padding: 80px 0;
+      align-items: end;
     }
 
-    .eyebrow {
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 34px;
+      align-items: end;
+    }
+
+    .kicker {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      color: var(--accent);
-      background: rgba(56, 189, 248, 0.1);
-      border: 1px solid rgba(56, 189, 248, 0.22);
-      padding: 8px 14px;
+      gap: 9px;
+      padding: 9px 13px;
+      border: 1px solid var(--line);
       border-radius: 999px;
-      font-size: 0.9rem;
-      margin-bottom: 22px;
+      color: var(--muted);
+      margin-bottom: 24px;
+      background: rgba(255, 250, 241, 0.65);
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 7px rgba(255, 107, 53, 0.14);
     }
 
     h1 {
-      font-size: clamp(3rem, 8vw, 6.8rem);
-      line-height: 0.94;
-      letter-spacing: -4px;
-      margin-bottom: 24px;
+      max-width: 820px;
+      font-size: clamp(4.5rem, 14vw, 11.5rem);
+      line-height: 0.79;
+      letter-spacing: -0.08em;
+      text-transform: lowercase;
+      margin-bottom: 28px;
     }
 
-    .gradient-text {
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      -webkit-background-clip: text;
-      background-clip: text;
+    .outline-word {
       color: transparent;
+      -webkit-text-stroke: 2px var(--ink);
+      text-stroke: 2px var(--ink);
     }
 
-    .hero p {
+    .hero-copy {
+      max-width: 670px;
       color: var(--muted);
-      font-size: 1.15rem;
-      max-width: 650px;
+      font-size: clamp(1.05rem, 1.6vw, 1.32rem);
       margin-bottom: 28px;
     }
 
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 14px;
-      margin-bottom: 34px;
+      gap: 12px;
+      align-items: center;
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 13px 18px;
+      gap: 8px;
+      padding: 14px 18px;
       border-radius: 999px;
-      font-weight: 700;
-      border: 1px solid transparent;
-      transition: transform 0.2s ease, background 0.2s ease, border 0.2s ease;
+      font-weight: 800;
+      border: 1px solid var(--ink);
+      transition: 0.2s ease;
     }
 
     .btn:hover {
       transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(16, 16, 16, 0.15);
     }
 
-    .btn-primary {
-      color: #07111f;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    .btn-dark {
+      background: var(--ink);
+      color: var(--cream);
     }
 
-    .btn-outline {
-      border-color: var(--card-border);
-      color: var(--white);
-      background: rgba(255, 255, 255, 0.05);
+    .btn-light {
+      background: transparent;
+      color: var(--ink);
     }
 
-    .quick-stats {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-      max-width: 670px;
-    }
-
-    .stat, .profile-card, .card {
-      background: var(--card);
-      border: 1px solid var(--card-border);
-      box-shadow: var(--shadow);
-      border-radius: 28px;
-    }
-
-    .stat {
-      padding: 18px;
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 1.45rem;
-      color: var(--white);
-    }
-
-    .stat span {
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
-
-    .profile-card {
-      padding: 26px;
+    .hero-card {
+      min-height: 520px;
+      border-radius: var(--radius-xl);
+      background: var(--dark);
+      color: var(--cream);
+      padding: 28px;
       position: relative;
       overflow: hidden;
+      box-shadow: var(--shadow);
     }
 
-    .profile-card::before {
+    .hero-card::before {
       content: "";
       position: absolute;
-      width: 220px;
-      height: 220px;
-      background: linear-gradient(135deg, rgba(56, 189, 248, 0.35), rgba(167, 139, 250, 0.28));
+      inset: auto -22% -20% auto;
+      width: 330px;
+      height: 330px;
       border-radius: 50%;
-      right: -80px;
-      top: -80px;
+      background: radial-gradient(circle, rgba(255, 107, 53, 0.9), rgba(14, 165, 233, 0.36), transparent 68%);
+      filter: blur(1px);
     }
 
-    .avatar {
-      width: 120px;
-      height: 120px;
-      border-radius: 30px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      color: #07111f;
-      font-size: 3rem;
-      font-weight: 900;
-      margin-bottom: 24px;
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      left: 28px;
+      bottom: 28px;
+      width: 110px;
+      height: 110px;
+      border: 2px solid rgba(246, 241, 232, 0.22);
+      border-radius: 28px;
+      transform: rotate(-8deg);
+    }
+
+    .card-topline {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 18px;
       position: relative;
+      z-index: 2;
     }
 
-    .profile-card h2 {
-      font-size: 1.6rem;
-      margin-bottom: 8px;
+    .mini-label {
+      color: rgba(246, 241, 232, 0.68);
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      letter-spacing: 0.13em;
+    }
+
+    .hero-card h2 {
       position: relative;
+      z-index: 2;
+      font-size: clamp(2.4rem, 5vw, 4.6rem);
+      line-height: 0.92;
+      letter-spacing: -0.06em;
+      margin-top: 104px;
+      max-width: 440px;
     }
 
-    .profile-card p {
-      color: var(--muted);
-      margin-bottom: 18px;
-      position: relative;
-    }
-
-    .tag-list {
+    .pill-stack {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      position: relative;
+      position: absolute;
+      left: 28px;
+      right: 28px;
+      bottom: 158px;
+      z-index: 2;
     }
 
-    .tag {
-      padding: 8px 11px;
+    .pill {
+      padding: 9px 12px;
+      border: 1px solid rgba(246, 241, 232, 0.18);
+      background: rgba(246, 241, 232, 0.08);
+      color: rgba(246, 241, 232, 0.82);
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: var(--muted);
-      font-size: 0.86rem;
+      font-size: 0.88rem;
     }
 
-    section {
-      padding: 88px 0;
+    .section {
+      padding: 92px 0;
+      border-top: 1px solid var(--line);
     }
 
-    .section-heading {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      gap: 24px;
-      margin-bottom: 30px;
-    }
-
-    .section-heading h2 {
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      line-height: 1;
-      letter-spacing: -1.5px;
-    }
-
-    .section-heading p {
-      color: var(--muted);
-      max-width: 460px;
-    }
-
-    .grid {
+    .section-title {
       display: grid;
+      grid-template-columns: 0.38fr 1fr;
+      gap: 32px;
+      align-items: start;
+      margin-bottom: 34px;
+    }
+
+    .section-num {
+      color: var(--muted);
+      font-weight: 900;
+    }
+
+    .section-title h2 {
+      font-size: clamp(2.6rem, 7vw, 7.6rem);
+      line-height: 0.86;
+      letter-spacing: -0.07em;
+      text-transform: lowercase;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
       gap: 18px;
     }
 
-    .grid-3 {
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    .grid-2 {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    .card {
-      padding: 26px;
-      transition: transform 0.2s ease, border 0.2s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(56, 189, 248, 0.42);
-    }
-
-    .card small {
-      color: var(--accent);
-      font-weight: 700;
-      letter-spacing: 0.4px;
-      text-transform: uppercase;
-    }
-
-    .card h3 {
-      font-size: 1.35rem;
-      margin: 10px 0;
-    }
-
-    .card p, .card li {
-      color: var(--muted);
-    }
-
-    .card ul {
-      margin-top: 14px;
-      padding-left: 18px;
-    }
-
-    .timeline {
-      display: grid;
-      gap: 18px;
-    }
-
-    .timeline-item {
-      display: grid;
-      grid-template-columns: 190px 1fr;
-      gap: 20px;
+    .tile {
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 241, 0.6);
+      border-radius: var(--radius-lg);
       padding: 24px;
-      border-radius: 28px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid var(--card-border);
+      min-height: 220px;
+      box-shadow: 0 16px 40px rgba(16, 16, 16, 0.05);
+      transition: 0.2s ease;
     }
 
-    .timeline-date {
-      color: var(--accent);
-      font-weight: 800;
-    }
-
-    .timeline-item h3 {
-      margin-bottom: 6px;
-    }
-
-    .timeline-item p {
-      color: var(--muted);
-    }
-
-    .skills-wrap {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .skill {
-      padding: 11px 14px;
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: var(--muted);
-    }
-
-    .project-card {
-      min-height: 260px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .project-meta {
-      margin-top: 20px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .contact-box {
-      text-align: center;
-      padding: 58px 28px;
-      border-radius: 34px;
-      background: linear-gradient(135deg, rgba(56, 189, 248, 0.16), rgba(167, 139, 250, 0.16));
-      border: 1px solid var(--card-border);
+    .tile:hover {
+      transform: translateY(-4px);
       box-shadow: var(--shadow);
     }
 
-    .contact-box h2 {
-      font-size: clamp(2.2rem, 5vw, 4.5rem);
-      letter-spacing: -2px;
-      margin-bottom: 16px;
+    .tile.dark {
+      background: var(--ink);
+      color: var(--cream);
+      border-color: var(--ink);
     }
 
-    .contact-box p {
+    .tile.orange {
+      background: var(--accent);
+      color: var(--ink);
+      border-color: var(--accent);
+    }
+
+    .tile.blue {
+      background: var(--accent-2);
+      color: var(--ink);
+      border-color: var(--accent-2);
+    }
+
+    .tile h3 {
+      font-size: 1.55rem;
+      letter-spacing: -0.04em;
+      margin-bottom: 12px;
+    }
+
+    .tile p, .tile li {
+      color: inherit;
+      opacity: 0.78;
+    }
+
+    .tile ul {
+      padding-left: 18px;
+      margin-top: 12px;
+    }
+
+    .big-stat {
+      font-size: clamp(3.8rem, 8vw, 7.8rem);
+      line-height: 0.85;
+      letter-spacing: -0.08em;
+      font-weight: 950;
+      margin-bottom: 18px;
+    }
+
+    .work-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .work-row {
+      display: grid;
+      grid-template-columns: 0.45fr 1fr 0.33fr;
+      gap: 20px;
+      align-items: center;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .work-row h3 {
+      font-size: clamp(1.5rem, 3vw, 3.1rem);
+      letter-spacing: -0.06em;
+      line-height: 0.95;
+    }
+
+    .work-row p {
       color: var(--muted);
+      max-width: 560px;
+    }
+
+    .year {
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .role-pill {
+      justify-self: end;
+      padding: 10px 13px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 18px;
+    }
+
+    .project {
+      min-height: 360px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-radius: var(--radius-xl);
+      padding: 26px;
+      border: 1px solid var(--line);
+      background: var(--card);
+      box-shadow: 0 16px 40px rgba(16, 16, 16, 0.06);
+      transition: 0.2s ease;
+    }
+
+    .project:hover {
+      transform: translateY(-5px) rotate(-0.5deg);
+      box-shadow: var(--shadow);
+    }
+
+    .project:nth-child(1) {
+      grid-column: span 7;
+      background: var(--ink);
+      color: var(--cream);
+      border-color: var(--ink);
+    }
+
+    .project:nth-child(2) {
+      grid-column: span 5;
+      background: #dff1ff;
+    }
+
+    .project:nth-child(3) {
+      grid-column: span 12;
+      background: #f5d6c6;
+      min-height: 280px;
+    }
+
+    .project small {
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: inherit;
+      opacity: 0.65;
+      font-weight: 900;
+    }
+
+    .project h3 {
+      font-size: clamp(2rem, 5vw, 4.8rem);
+      line-height: 0.88;
+      letter-spacing: -0.07em;
+      margin: 14px 0;
+    }
+
+    .project p {
+      max-width: 670px;
+      color: inherit;
+      opacity: 0.72;
+      font-size: 1.05rem;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 22px;
+    }
+
+    .tag {
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      padding: 8px 11px;
+      opacity: 0.72;
+      font-size: 0.87rem;
+    }
+
+    .marquee {
+      display: flex;
+      overflow: hidden;
+      border-block: 1px solid var(--line);
+      background: var(--ink);
+      color: var(--cream);
+      padding: 20px 0;
+      margin-top: 40px;
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 26px;
+      min-width: max-content;
+      animation: scroll 24s linear infinite;
+      font-weight: 900;
+      font-size: clamp(1.4rem, 3vw, 2.6rem);
+      letter-spacing: -0.04em;
+      text-transform: lowercase;
+    }
+
+    .marquee span {
+      color: rgba(246, 241, 232, 0.76);
+    }
+
+    @keyframes scroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    .skills-wall {
+      columns: 3 220px;
+      column-gap: 14px;
+    }
+
+    .skill {
+      display: inline-block;
+      width: 100%;
+      break-inside: avoid;
+      margin: 0 0 14px;
+      padding: 16px 18px;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 241, 0.65);
+      font-weight: 800;
+      color: var(--muted);
+    }
+
+    .contact-card {
+      min-height: 520px;
+      border-radius: var(--radius-xl);
+      background: var(--ink);
+      color: var(--cream);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 38px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .contact-card::before {
+      content: "MH";
+      position: absolute;
+      font-size: 28vw;
+      font-weight: 950;
+      letter-spacing: -0.12em;
+      opacity: 0.045;
+      line-height: 1;
+    }
+
+    .contact-inner {
+      position: relative;
+      z-index: 2;
+    }
+
+    .contact-card h2 {
+      font-size: clamp(3rem, 10vw, 9.4rem);
+      line-height: 0.82;
+      letter-spacing: -0.08em;
+      text-transform: lowercase;
+      margin-bottom: 22px;
+    }
+
+    .contact-card p {
+      color: rgba(246, 241, 232, 0.72);
       max-width: 620px;
-      margin: 0 auto 26px;
+      margin: 0 auto 24px;
+      font-size: 1.1rem;
     }
 
     footer {
-      padding: 32px 0;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 30px 0 42px;
       color: var(--muted);
-      text-align: center;
+      font-weight: 700;
+    }
+
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
     }
 
     .reveal {
       opacity: 0;
-      transform: translateY(22px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
+      transform: translateY(20px);
+      transition: 0.7s ease;
     }
 
     .reveal.visible {
@@ -420,258 +625,302 @@
       transform: translateY(0);
     }
 
-    @media (max-width: 880px) {
-      .hero, .grid-2, .grid-3 {
+    @media (max-width: 920px) {
+      header {
+        top: 10px;
+      }
+
+      .hero-grid,
+      .section-title,
+      .about-grid {
         grid-template-columns: 1fr;
       }
 
-      .section-heading {
-        align-items: start;
-        flex-direction: column;
+      .hero-card {
+        min-height: 440px;
       }
 
-      .timeline-item {
+      .work-row {
         grid-template-columns: 1fr;
       }
 
-      .quick-stats {
-        grid-template-columns: 1fr;
+      .role-pill {
+        justify-self: start;
+      }
+
+      .project:nth-child(1),
+      .project:nth-child(2),
+      .project:nth-child(3) {
+        grid-column: span 12;
       }
 
       .menu-btn {
-        display: block;
+        display: grid;
+        place-items: center;
       }
 
       .nav-links {
         position: absolute;
-        top: 66px;
-        right: 4%;
+        top: 62px;
         left: 4%;
+        right: 4%;
         display: none;
         flex-direction: column;
-        padding: 22px;
+        align-items: stretch;
+        padding: 14px;
+        background: rgba(246, 241, 232, 0.96);
+        border: 1px solid var(--line);
         border-radius: 24px;
-        background: rgba(15, 23, 42, 0.96);
-        border: 1px solid var(--card-border);
+        box-shadow: var(--shadow);
       }
 
       .nav-links.open {
         display: flex;
       }
+
+      .nav-cta {
+        margin-left: 0;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 560px) {
+      h1 {
+        font-size: 4.4rem;
+      }
+
+      .hero {
+        padding-top: 116px;
+      }
+
+      .hero-actions {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="grain"></div>
+
   <header>
     <div class="container">
       <nav>
-        <a href="#home" class="logo">Minh<span>Ho</span></a>
+        <a class="brand" href="#home" aria-label="Minh Ho home">
+          <span class="brand-mark">MH</span>
+          <span>Minh Ho</span>
+        </a>
         <button class="menu-btn" id="menuBtn" aria-label="Open navigation">☰</button>
         <div class="nav-links" id="navLinks">
           <a href="#about">About</a>
           <a href="#work">Work</a>
           <a href="#projects">Projects</a>
-          <a href="#leadership">Leadership</a>
-          <a href="#contact">Contact</a>
+          <a href="#skills">Skills</a>
+          <a href="#contact" class="nav-cta">Contact</a>
         </div>
       </nav>
     </div>
   </header>
 
-  <main>
-    <section class="hero container" id="home">
-      <div class="reveal">
-        <div class="eyebrow">MIS + Data Analytics + Consulting</div>
-        <h1>analyze.<br><span class="gradient-text">build.</span><br>lead.</h1>
-        <p>
-          I’m Minh Ho, a University of Houston business student studying Management Information Systems and Management. I enjoy turning messy data into clear dashboards, useful insights, and better business decisions.
-        </p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#projects">View My Work</a>
-          <a class="btn btn-outline" href="mailto:minhhoviet2003@gmail.com">Email Me</a>
-          <a class="btn btn-outline" href="https://www.linkedin.com/in/minhhoviet1" target="_blank" rel="noopener">LinkedIn</a>
-        </div>
-        <div class="quick-stats">
-          <div class="stat">
-            <strong>3.5</strong>
-            <span>Cumulative GPA</span>
-          </div>
-          <div class="stat">
-            <strong>100+</strong>
-            <span>Employees/products standardized</span>
-          </div>
-          <div class="stat">
-            <strong>$10K+</strong>
-            <span>Club budget managed</span>
+  <main id="home">
+    <section class="hero container">
+      <div class="hero-grid">
+        <div class="reveal">
+          <div class="kicker"><span class="dot"></span> Data analyst intern · MIS student · Houston</div>
+          <h1>analyze <span class="outline-word">&</span><br>build</h1>
+          <p class="hero-copy">
+            I’m Minh Ho, a University of Houston business student studying Management Information Systems and Management. I turn messy data into clean dashboards, practical documentation, and business insights people can actually use.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-dark" href="#projects">See my work →</a>
+            <a class="btn btn-light" href="mailto:minhhoviet2003@gmail.com">Email me</a>
+            <a class="btn btn-light" href="https://www.linkedin.com/in/minhhoviet1" target="_blank" rel="noopener">LinkedIn</a>
           </div>
         </div>
-      </div>
 
-      <aside class="profile-card reveal">
-        <div class="avatar">MH</div>
-        <h2>Data Analyst Intern</h2>
-        <p>The Lab Consulting · Houston, TX</p>
-        <div class="tag-list">
-          <span class="tag">Power BI</span>
-          <span class="tag">Microsoft Fabric</span>
-          <span class="tag">SQL</span>
-          <span class="tag">Python</span>
-          <span class="tag">HTML/CSS/JS</span>
-          <span class="tag">Business Analytics</span>
-        </div>
-      </aside>
+        <aside class="hero-card reveal" aria-label="Profile highlight card">
+          <div class="card-topline">
+            <div>
+              <div class="mini-label">Currently</div>
+              <strong>The Lab Consulting</strong>
+            </div>
+            <div class="mini-label">May 2026</div>
+          </div>
+          <h2>data, design, and business clarity.</h2>
+          <div class="pill-stack">
+            <span class="pill">Power BI</span>
+            <span class="pill">Microsoft Fabric</span>
+            <span class="pill">SQL</span>
+            <span class="pill">Python</span>
+            <span class="pill">HTML/CSS/JS</span>
+          </div>
+        </aside>
+      </div>
     </section>
 
-    <section id="about">
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>data analytics</span> • <span>consulting</span> • <span>dashboards</span> • <span>tennis leadership</span> • <span>business technology</span> • <span>data analytics</span> • <span>consulting</span> • <span>dashboards</span> • <span>tennis leadership</span> • <span>business technology</span> •
+      </div>
+    </div>
+
+    <section class="section" id="about">
       <div class="container">
-        <div class="section-heading reveal">
-          <h2>About me</h2>
-          <p>A business and technology student focused on analytics, dashboard documentation, and data-driven problem solving.</p>
+        <div class="section-title reveal">
+          <div class="section-num">01 / ABOUT</div>
+          <h2>business mind,<br>technical hands.</h2>
         </div>
-        <div class="grid grid-3">
-          <div class="card reveal">
-            <small>Education</small>
-            <h3>University of Houston</h3>
-            <p>BBA in Management Information Systems and Management at C.T. Bauer College of Business. Expected graduation: May 2026.</p>
+        <div class="about-grid">
+          <div class="tile dark reveal">
+            <div class="big-stat">3.5</div>
+            <h3>Cumulative GPA</h3>
+            <p>Studying Management Information Systems and Management at the C.T. Bauer College of Business.</p>
           </div>
-          <div class="card reveal">
-            <small>Recognition</small>
-            <h3>3-time Dean’s List</h3>
-            <p>Recognized for academic performance while balancing coursework, internship work, and student leadership.</p>
+          <div class="tile orange reveal">
+            <div class="big-stat">3×</div>
+            <h3>Dean’s List</h3>
+            <p>Recognized for academic performance while balancing work, leadership, and projects.</p>
           </div>
-          <div class="card reveal">
-            <small>Interests</small>
-            <h3>Tennis, analytics, and teamwork</h3>
-            <p>I enjoy tennis, pickleball, working out, outdoor activities, sneakers, cooking, and case study competitions.</p>
+          <div class="tile blue reveal">
+            <div class="big-stat">100+</div>
+            <h3>Members & data points</h3>
+            <p>Experience supporting student events, dashboards, standardization, and data organization.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="work">
+    <section class="section" id="work">
       <div class="container">
-        <div class="section-heading reveal">
-          <h2>Work experience</h2>
-          <p>Hands-on experience across consulting, analytics, recruitment research, coaching, and operations.</p>
+        <div class="section-title reveal">
+          <div class="section-num">02 / EXPERIENCE</div>
+          <h2>where I’ve<br>worked.</h2>
         </div>
-        <div class="timeline">
-          <div class="timeline-item reveal">
-            <div class="timeline-date">June 2025 — Present</div>
+
+        <div class="work-list">
+          <article class="work-row reveal">
+            <div class="year">2025 — Present</div>
             <div>
-              <h3>The Lab Consulting · Data Analyst Intern</h3>
-              <p>Standardize data, clean Power BI dashboard datasets, map relationships, and document workflows to improve client understanding and reporting accuracy.</p>
+              <h3>The Lab Consulting</h3>
+              <p>Standardizing data, cleaning dashboard datasets, mapping relationships, and documenting internal workflows as a Data Analyst Intern.</p>
             </div>
-          </div>
-          <div class="timeline-item reveal">
-            <div class="timeline-date">Mar 2022 — Mar 2025</div>
+            <div class="role-pill">Data Analyst Intern</div>
+          </article>
+
+          <article class="work-row reveal">
+            <div class="year">2022 — 2025</div>
             <div>
-              <h3>Youth League Tennis · Tennis Coach</h3>
-              <p>Coached beginner and advanced tennis students, led drills, and provided feedback to help players improve fundamentals and technique.</p>
+              <h3>Youth League Tennis</h3>
+              <p>Coached beginner and advanced tennis students through drills, feedback, and skill development.</p>
             </div>
-          </div>
-          <div class="timeline-item reveal">
-            <div class="timeline-date">Apr 2024 — May 2024</div>
+            <div class="role-pill">Tennis Coach</div>
+          </article>
+
+          <article class="work-row reveal">
+            <div class="year">2024</div>
             <div>
-              <h3>Credera · Talent Acquisition Externship</h3>
-              <p>Conducted market research, built college-specific presentations, and developed partnership frameworks for SMU, UTSA, and UH.</p>
+              <h3>Credera</h3>
+              <p>Researched university markets, built recruiting presentations, and supported partnership strategy for SMU, UTSA, and UH.</p>
             </div>
-          </div>
-          <div class="timeline-item reveal">
-            <div class="timeline-date">May 2021 — Jul 2022</div>
+            <div class="role-pill">TA Externship</div>
+          </article>
+
+          <article class="work-row reveal">
+            <div class="year">2021 — 2022</div>
             <div>
-              <h3>Tennis Express · Online Picker & Warehouse Assistant</h3>
-              <p>Managed online, in-store pickup, and Amazon orders while organizing inventory and completing daily item inspections.</p>
+              <h3>Tennis Express</h3>
+              <p>Managed online orders, inventory organization, item inspections, and warehouse operations.</p>
             </div>
-          </div>
+            <div class="role-pill">Warehouse Assistant</div>
+          </article>
         </div>
       </div>
     </section>
 
-    <section id="projects">
+    <section class="section" id="projects">
       <div class="container">
-        <div class="section-heading reveal">
-          <h2>Projects</h2>
-          <p>Academic and business projects that show my experience with project management, SQL, research, and presentation skills.</p>
+        <div class="section-title reveal">
+          <div class="section-num">03 / PROJECTS</div>
+          <h2>selected<br>projects.</h2>
         </div>
-        <div class="grid grid-3">
-          <div class="card project-card reveal">
+
+        <div class="projects-grid">
+          <article class="project reveal">
             <div>
-              <small>MIS 4374</small>
-              <h3>BrightTech Solutions Project</h3>
-              <p>Led a team of 4 to develop a performance review system for a simulated IT consulting firm while managing scope, schedule, and a $250K simulated budget.</p>
+              <small>MIS 4374 · Project Manager</small>
+              <h3>BrightTech Solutions</h3>
+              <p>Led a team of four to develop a performance review system for a simulated IT consulting firm. Managed project scope, schedule, deliverables, and a simulated $250K budget.</p>
             </div>
-            <div class="project-meta">
+            <div class="tags">
               <span class="tag">Project Management</span>
+              <span class="tag">Consulting</span>
               <span class="tag">Stakeholders</span>
-              <span class="tag">Budget</span>
             </div>
-          </div>
+          </article>
 
-          <div class="card project-card reveal">
+          <article class="project reveal">
             <div>
-              <small>MIS 3376</small>
-              <h3>MG Horse Habit SQL Project</h3>
-              <p>Imported data into Oracle, built complex SQL joins and subqueries, and improved query performance by 11.6%.</p>
+              <small>MIS 3376 · Database Management</small>
+              <h3>MG Horse Habit SQL</h3>
+              <p>Imported required tables into Oracle, wrote complex SQL queries, and improved query performance by 11.6%.</p>
             </div>
-            <div class="project-meta">
+            <div class="tags">
               <span class="tag">SQL</span>
               <span class="tag">Oracle</span>
-              <span class="tag">Database</span>
+              <span class="tag">Optimization</span>
             </div>
-          </div>
+          </article>
 
-          <div class="card project-card reveal">
+          <article class="project reveal">
             <div>
-              <small>BUSI 3302</small>
-              <h3>KPMG Ethics Case Competition</h3>
-              <p>Led external communication for a team researching Amazon’s use of AI surveillance and its impact on delivery drivers’ performance and well-being.</p>
+              <small>BUSI 3302 · Ethics Case Competition</small>
+              <h3>KPMG AI Surveillance Case</h3>
+              <p>Worked with a seven-member team to research how Amazon’s use of AI surveillance affects delivery drivers’ performance and well-being, then delivered a final presentation using research and ethical analysis.</p>
             </div>
-            <div class="project-meta">
+            <div class="tags">
               <span class="tag">AI Ethics</span>
-              <span class="tag">Research</span>
+              <span class="tag">Team Leadership</span>
               <span class="tag">Presentation</span>
             </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="leadership">
+      <div class="container">
+        <div class="section-title reveal">
+          <div class="section-num">04 / LEADERSHIP</div>
+          <h2>outside the<br>classroom.</h2>
+        </div>
+        <div class="about-grid">
+          <div class="tile dark reveal">
+            <h3>UH Tennis Club</h3>
+            <p>Finance and Event Coordinator Officer managing budget, reimbursements, tournaments, social mixers, and charity matches for 100+ members.</p>
+          </div>
+          <div class="tile reveal">
+            <h3>MIS Student Organization</h3>
+            <p>Active member of a 500+ member organization focused on technology, networking, and professional development.</p>
+          </div>
+          <div class="tile orange reveal">
+            <h3>Built for teamwork</h3>
+            <p>I like roles where I can organize people, clean up confusing processes, and make work easier to understand.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="leadership">
+    <section class="section" id="skills">
       <div class="container">
-        <div class="section-heading reveal">
-          <h2>Leadership</h2>
-          <p>Leadership experience through student organizations, finance coordination, and event planning.</p>
+        <div class="section-title reveal">
+          <div class="section-num">05 / SKILLS</div>
+          <h2>tools I<br>use.</h2>
         </div>
-        <div class="grid grid-2">
-          <div class="card reveal">
-            <small>University of Houston Tennis Club</small>
-            <h3>Finance & Event Coordinator Officer</h3>
-            <ul>
-              <li>Managed a $10,000+ annual budget and processed reimbursements.</li>
-              <li>Planned tournaments, social mixers, and charity matches for 100+ members.</li>
-              <li>Created a membership form that organizes data into separate Excel sheets.</li>
-            </ul>
-          </div>
-          <div class="card reveal">
-            <small>MIS Student Organization</small>
-            <h3>Member</h3>
-            <ul>
-              <li>Active member of a 500+ member organization.</li>
-              <li>Built connections with companies through networking opportunities.</li>
-              <li>Developed skills in Java, HTML, SQL, and business technology.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="skills">
-      <div class="container">
-        <div class="section-heading reveal">
-          <h2>Skills</h2>
-          <p>Tools and technologies I use for analytics, business documentation, and web development.</p>
-        </div>
-        <div class="skills-wrap reveal">
+        <div class="skills-wall reveal">
           <span class="skill">Power BI</span>
           <span class="skill">Microsoft Fabric</span>
           <span class="skill">Excel</span>
@@ -685,21 +934,25 @@
           <span class="skill">JSON</span>
           <span class="skill">R</span>
           <span class="skill">MS Azure</span>
+          <span class="skill">Visual Studio</span>
           <span class="skill">Smartsheet</span>
           <span class="skill">Canva</span>
+          <span class="skill">Vietnamese / English</span>
         </div>
       </div>
     </section>
 
-    <section id="contact">
+    <section class="section" id="contact">
       <div class="container">
-        <div class="contact-box reveal">
-          <h2>Let’s connect.</h2>
-          <p>Interested in analytics, dashboards, consulting, business technology, or tennis? Reach out and let’s talk.</p>
-          <div class="hero-actions" style="justify-content: center; margin-bottom: 0;">
-            <a class="btn btn-primary" href="mailto:minhhoviet2003@gmail.com">minhhoviet2003@gmail.com</a>
-            <a class="btn btn-outline" href="tel:7133306706">713.330.6706</a>
-            <a class="btn btn-outline" href="https://www.linkedin.com/in/minhhoviet1" target="_blank" rel="noopener">LinkedIn</a>
+        <div class="contact-card reveal">
+          <div class="contact-inner">
+            <h2>let’s<br>connect.</h2>
+            <p>Open to analytics, consulting, dashboard, business technology, and project opportunities.</p>
+            <div class="hero-actions" style="justify-content: center;">
+              <a class="btn btn-light" style="border-color: var(--cream); color: var(--cream);" href="mailto:minhhoviet2003@gmail.com">Email</a>
+              <a class="btn btn-light" style="border-color: var(--cream); color: var(--cream);" href="tel:7133306706">Call</a>
+              <a class="btn btn-light" style="border-color: var(--cream); color: var(--cream);" href="https://www.linkedin.com/in/minhhoviet1" target="_blank" rel="noopener">LinkedIn</a>
+            </div>
           </div>
         </div>
       </div>
@@ -707,8 +960,9 @@
   </main>
 
   <footer>
-    <div class="container">
-      <p>© <span id="year"></span> Minh Ho. Built with HTML, CSS, and JavaScript.</p>
+    <div class="container footer-row">
+      <p>© <span id="year"></span> Minh Ho</p>
+      <p>Built with HTML, CSS, and JavaScript</p>
     </div>
   </footer>
 
