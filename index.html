@@ -81,6 +81,13 @@
   }
   .menu .cta:hover{background:var(--amber);color:var(--bg)}
 
+
+  /* ── tab page switching ── */
+  [hidden]{display:none !important}
+  .tab-page{animation:tabFade .35s ease}
+  @keyframes tabFade{from{opacity:.15;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+  .menu a.active{background:rgba(255,122,44,.15);color:var(--paper);border:1px solid rgba(255,122,44,.35)}
+
   /* ── hero ── */
   .hero{
     position:relative;padding:60px 28px 80px;
@@ -537,18 +544,19 @@
   <nav>
     <div class="brand">minh<span class="dot">.</span>ho</div>
     <div class="menu">
-      <a href="#about">about</a>
-      <a href="#principles">principles</a>
-      <a href="#work">work</a>
-      <a href="#projects">projects</a>
-      <a href="#trophies">trophies</a>
-      <a href="#skills">skills</a>
-      <a href="mailto:minhhoviet2003@gmail.com" class="cta">say hi ↗</a>
+      <a href="#home" data-tab="home" class="active">home</a>
+      <a href="#about" data-tab="about">about</a>
+      <a href="#principles" data-tab="principles">principles</a>
+      <a href="#work" data-tab="work">work</a>
+      <a href="#projects" data-tab="projects">projects</a>
+      <a href="#trophies" data-tab="trophies">trophies</a>
+      <a href="#skills" data-tab="skills">skills</a>
+      <a href="#contact" data-tab="contact" class="cta">contact ↗</a>
     </div>
   </nav>
 
   <!-- hero -->
-  <section class="hero">
+  <section id="home" class="hero tab-page" data-page="home">
     <div class="orb"></div>
     <div class="orb-sm"></div>
 
@@ -581,7 +589,7 @@
   </section>
 
   <!-- marquee -->
-  <div class="mq">
+  <div class="mq tab-page" data-page="home">
     <div class="mq-track">
       <span>data <i>&amp;</i> systems</span><span>power bi</span><span>sql <i>queries</i></span><span>microsoft fabric</span><span>project <i>management</i></span><span>dashboards</span>
       <span>data <i>&amp;</i> systems</span><span>power bi</span><span>sql <i>queries</i></span><span>microsoft fabric</span><span>project <i>management</i></span><span>dashboards</span>
@@ -589,7 +597,7 @@
   </div>
 
   <!-- about -->
-  <section id="about" class="rv">
+  <section id="about" class="rv tab-page" data-page="about" hidden>
     <div class="s-head">
       <div>
         <div class="s-num">[01] / about</div>
@@ -621,7 +629,7 @@
   </section>
 
   <!-- principles -->
-  <section id="principles" class="rv">
+  <section id="principles" class="rv tab-page" data-page="principles" hidden>
     <div class="s-head">
       <div>
         <div class="s-num">[02] / how i work</div>
@@ -651,7 +659,7 @@
   </section>
 
   <!-- work -->
-  <section id="work" class="rv">
+  <section id="work" class="rv tab-page" data-page="work" hidden>
     <div class="s-head">
       <div>
         <div class="s-num">[03] / experience</div>
@@ -715,7 +723,7 @@
   </section>
 
   <!-- projects -->
-  <section id="projects" class="rv">
+  <section id="projects" class="rv tab-page" data-page="projects" hidden>
     <div class="s-head">
       <div>
         <div class="s-num">[04] / projects</div>
@@ -756,7 +764,7 @@
   </section>
 
   <!-- trophies -->
-  <section id="trophies" class="rv">
+  <section id="trophies" class="rv tab-page" data-page="trophies" hidden>
     <div class="s-head">
       <div>
         <div class="s-num">[05] / proud of</div>
@@ -801,7 +809,7 @@
   </section>
 
   <!-- skills -->
-  <section id="skills" class="rv">
+  <section id="skills" class="rv tab-page" data-page="skills" hidden>
     <div class="s-head">
       <div>
         <div class="s-num">[06] / toolbox</div>
@@ -869,7 +877,7 @@
   </section>
 
   <!-- contact -->
-  <section id="contact" class="contact rv">
+  <section id="contact" class="contact rv tab-page" data-page="contact" hidden>
     <div class="contact-kick">// say hi</div>
     <h2>let's <em>build</em><br>something <em>good.</em></h2>
     <div class="contact-links">
@@ -883,7 +891,7 @@
   <!-- footer -->
   <footer>
     <div>© 2026 minh ho · clean &amp; ship</div>
-    <div><a href="#" style="text-decoration:underline">↑ back to top</a></div>
+    <div><a href="#home" data-tab="home" style="text-decoration:underline">↑ back to top</a></div>
   </footer>
 
 </div>
@@ -899,6 +907,38 @@
     es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
   },{threshold:.1});
   document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+  // Tab-style page switching: one HTML file, multiple page views
+  const tabLinks = document.querySelectorAll('[data-tab]');
+  const tabPages = document.querySelectorAll('[data-page]');
+
+  function showTab(tabName){
+    tabPages.forEach(page=>{
+      const isActive = page.dataset.page === tabName;
+      page.hidden = !isActive;
+      if(isActive) page.classList.add('in');
+    });
+
+    tabLinks.forEach(link=>{
+      link.classList.toggle('active', link.dataset.tab === tabName);
+    });
+
+    if(location.hash !== '#' + tabName){
+      history.replaceState(null, '', '#' + tabName);
+    }
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  tabLinks.forEach(link=>{
+    link.addEventListener('click', (e)=>{
+      e.preventDefault();
+      showTab(link.dataset.tab);
+    });
+  });
+
+  const firstTab = location.hash ? location.hash.replace('#','') : 'home';
+  const validTabs = [...tabPages].map(page=>page.dataset.page);
+  showTab(validTabs.includes(firstTab) ? firstTab : 'home');
 </script>
 </body>
 </html>
